@@ -17,7 +17,7 @@ services:
       PGHOST: database
       PGDATABASE: postgres
       PGUSER: postgres
-      PGPASSWORD: itachi007
+      POSTGRES_PASSWORD: itachi007
     ports:
      - "5432:5432"
     volumes:

@@ -1,8 +1,7 @@
 import {Router} from 'express'
+import user from '../controllers/user.js'
 const router = Router()
 
-router.get('/criar',(req,res)=>{
-    res.status(200)
-})
+router.post('/criar',user.newCount)
 
 export default  router
