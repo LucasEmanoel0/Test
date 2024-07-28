@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev":"node ./src/index.js",
+    "dev": "node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +19,8 @@
   "homepage": "https://github.com/LucasEmanoel0/Test#readme",
   "description": "",
   "dependencies": {
+    "@types/dotenv": "^8.2.0",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jest": "^29.7.0",
     "pg": "^8.12.0",
