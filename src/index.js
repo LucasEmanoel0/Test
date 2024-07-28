@@ -1,8 +1,8 @@
 import express from 'express'
 import router from './router/routes.js'
+import 'dotenv/config'
 const app = express()
 const port = 5000
-
 
 app.use(express.json())
 app.use(router)
