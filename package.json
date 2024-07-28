@@ -1,0 +1,32 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasEmanoel0/Test.git"
+  },
+  "author": "Lucas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucasEmanoel0/Test/issues"
+  },
+  "homepage": "https://github.com/LucasEmanoel0/Test#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2",
+    "jest": "^29.7.0",
+    "pg": "^8.12.0",
+    "supertest": "^7.0.0",
+    "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
+    "@types/pg": "^8.11.6",
+    "@types/supertest": "^6.0.2"
+  }
+}
