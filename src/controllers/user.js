@@ -2,6 +2,7 @@
 import pool from "../database/database.js"
 
 
+
 export default {
     newCount: async (req,res)=>{
         let {nome,senha,email,dataNascimento} = req.body
@@ -28,5 +29,31 @@ export default {
         }
 
         
+    },
+    Login: async (req,res)=>{
+        let {senha,email} = req.body
+        if(!senha || !email){
+            res.status(400).send({message:"Email e senha são obrigatarios"})
+        }else{
+            try {
+                let user = await pool.query('SELECT *FROM "TEST" WHERE ("password"=$1 AND "email" = $2)',[senha,email])
+                if(user.rowCount > 0){
+                    res.status(200).send({message:"Usuario autenticado"})
+                }else{
+                    res.status(404).send({message:"Usuario não encontrado"})
+                }
+            } catch (error) {
+                
+            }
+
+        }
+        
+
+    },
+    Upate: async(req,res)=>{
+        let {email,senha} = req.body
+        if(!email || !senha ){
+            
+        }
     }
 }
