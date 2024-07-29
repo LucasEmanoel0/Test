@@ -175,5 +175,39 @@ describe("PATCH /update",()=>{
     
 })
 
+describe("GET /USER",()=>{
+   it('Usuario encontrado',async()=>{
+    let user = {
+        senha:"itachi007",
+        email:"lucas@gmail.com"
+    }
+    supertest(app).get('/usuario').send(user).expect(200)
+   })
+
+   it('Usuario não encontrado',async()=>{
+    let user = {
+        senha:"lucas",
+        email:"lucas@gmail.com"
+    }
+    supertest(app).get('/usuario').send(user).expect(400).expect((res)=>{
+        let {message} = res.body
+        expect(message).toBe("Usuario nao encontrado")
+    })
+   })
+
+   it('Senha e email nao preenchidos',async()=>{
+    let user = {
+        senha:"",
+        email:"lucas@gmail.com"
+    }
+    supertest(app).get('/usuario').send(user).expect(400).expect((res)=>{
+        let {message} = res.body
+        expect(message).toBe("email e senha são obrigatorios")
+    })
+   })
+
+
+})
+
 
 
