@@ -14,11 +14,11 @@ describe("POST /criar",()=>{
            try {
             await supertest(app).post('/criar').send(user).expect(201).expect(res=>{
                 let {message} = res.body
-                console.log(message)
                 expect(message).toBe("Usuario criado com sucesso")
             })
            } catch (error) {
-            console.log(error)
+            console.log("criando dados no bd "+ error)
+            console.log(res.body.message)
             
            }
         
@@ -35,11 +35,11 @@ describe("POST /criar",()=>{
            try {
             await supertest(app).post('/criar').send(user).expect(400).expect(res=>{
                 let {message} = res.body
-                console.log(message)
                 expect(message).toBe("Preencha todos os dados")
             })
            } catch (error) {
-            console.log(error)
+            console.log("recusando dados vazios"+error)
+            console.log(res.body.message)
             
            }
         
@@ -61,13 +61,12 @@ describe("POST  /login",()=>{
             .expect(200)
             .expect((res)=>{
                 let {message} = res.body
-                console.log(message)
                 expect(message).toBe("Usuario autenticado")
                })
             
         } catch (error) {
             console.log(`error é ${error} `)
-            throw error 
+            console.log(res.body.message)
             
         }
 
@@ -78,14 +77,13 @@ describe("POST  /login",()=>{
             email:"rafael@gmail.com"
         }
         try {
-            await supertest(app).post('/criar').send(user).expect(404).expect((res)=>{
+            await supertest(app).post('/login').send(user).expect(404).expect((res)=>{
                 let {message} = res.body
-                console.log(message)
-                describe(message).toBe("Usuario não encontrado")
+                expect(message).toBe("Usuario não encontrado")
             })
             
         } catch (error) {
-            console.log(error)
+            console.log("login não encontrado " + error)
             
         }
         
@@ -96,14 +94,13 @@ describe("POST  /login",()=>{
             email:""
         }
         try {
-            await supertest(app).post('/criar').send(user).expect(400).expect((res)=>{
+            await supertest(app).post('/login').send(user).expect(400).expect((res)=>{
                 let {message} = res.body
-                console.log(message)
-                describe(message).toBe("Email e senha são obrigatarios")
+                expect(message).toBe("Email e senha são obrigatarios")
             })
             
         } catch (error) {
-            console.log(error)
+            console.log("dados não preenchidos " + error.message)
             
         }
         
@@ -111,11 +108,71 @@ describe("POST  /login",()=>{
 
 })
 
-describe("PATCH /user",()=>{
+describe("PATCH /update",()=>{
     it('senha atualizada com sucesso',async ()=>{
+        let user  = {
+            email:"lucas@gmail.com",
+            senha:"lucasemanoel",
+            NovaSenha:"itachi007"
+        }
+        try {
+            await supertest(app).patch('/update').send(user).expect(200).expect((res)=>{
+                let {message} = res.body
+                expect(message).toBe("Senha trocado com sucesso")
+            })
+            
+        } catch (error) {
+            console.log(error)
+            console.log(res.body.message)
+            
+        }
+
         
 
     })
+
+    it('Usuario não encontrado',async ()=>{
+        let user  = {
+            email:"jhon@gmail.com",
+            senha:"lucasemanoel",
+            NovaSenha:"itachi007"
+        }
+        try {
+            await supertest(app).patch('/update').send(user).expect(400).expect((res)=>{
+                let {message} = res.body
+                expect(message).toBe("Usuario não encontrado")
+            })
+            
+        } catch (error) {
+            console.log(error)
+            
+        }
+
+        
+
+    })
+
+    it('Dados não preenchidos',async ()=>{
+        let user  = {
+            email:"lucas@gmail.com",
+            senha:"lucasemanoel",
+            NovaSenha:""
+        }
+        supertest(app).patch('/update').send(user).expect(400).expect((res)=>{
+            try {
+                let {message} = res.body
+                expect(message).toBe("email,senha atual e nova senha são obrigatorios")
+                
+            } catch (error) {
+                console.log(error)
+                console.log(res.body.message)
+                
+            }
+            
+        })
+    })
+
+    
 })
 
 

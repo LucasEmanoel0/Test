@@ -43,6 +43,7 @@ export default {
                     res.status(404).send({message:"Usuario não encontrado"})
                 }
             } catch (error) {
+                console.log(error)
                 
             }
 
@@ -51,9 +52,28 @@ export default {
 
     },
     Upate: async(req,res)=>{
-        let {email,senha} = req.body
-        if(!email || !senha ){
-            
+        let {email,senha,NovaSenha} = req.body
+        if(!email || !senha || !NovaSenha  ){
+            res.status(400).send({message:"email,senha atual e nova senha são obrigatorios"})
+        }else{
+            try {
+                let user = await pool.query('SELECT *FROM "TEST" WHERE ("password"=$1 AND "email" = $2)',[senha,email])
+                if(user.rowCount > 0){
+                    let update = await pool.query('UPDATE "TEST" SET "password" = $1 WHERE "email" = $2', [NovaSenha, email])
+                    if(update.rowCount){
+                        res.status(200).send({message:"Senha trocado com sucesso"})
+                    }else{
+                        res.status(400).send({message:"Falha ao atualizar senha"})
+                    }
+                }else{
+                    res.status(400).send({message:"Usuario não encontrado"})
+                }
+            } catch (error) {
+                console.log(error)
+            }
+
         }
+
     }
+
 }
