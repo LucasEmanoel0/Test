@@ -74,6 +74,20 @@ export default {
 
         }
 
+    },
+    User: async(req,res)=>{
+        let {email,senha} = req.body
+
+        if(!email || !senha){
+            res.status(400).send("email e senha são obrigatorios")
+        }else{
+            let userDb  = await pool.query('SELECT * FROM "TEST" WHERE ("password" = $1 AND "email" = $2)',[senha,email])
+            if(userDb.rowCount > 0 ){
+                 res.status(200).send(userDb.rows[0])
+            }else{
+                res.status(400).send({message:"Usuario nao encontrado"})
+            }
+        }
     }
 
 }
