@@ -9,7 +9,7 @@ export default {
     } else {
       try {
         let result = await pool.query(
-          'INSERT INTO "TEST" ("name","email","password","dataNascimento") VALUES ($1,$2, $3, $4)',
+          'INSERT INTO test ("name","email","password","data_nascimento") VALUES ($1,$2, $3, $4)',
           [nome, email, senha, dataNascimento]
         );
 
@@ -31,7 +31,7 @@ export default {
     } else {
       try {
         let user = await pool.query(
-          'SELECT *FROM "TEST" WHERE ("password"=$1 AND "email" = $2)',
+          'SELECT *FROM test WHERE ("password"=$1 AND "email" = $2)',
           [senha, email]
         );
         if (user.rowCount > 0) {
@@ -53,12 +53,12 @@ export default {
     } else {
       try {
         let user = await pool.query(
-          'SELECT *FROM "TEST" WHERE ("password"=$1 AND "email" = $2)',
+          'SELECT *FROM test WHERE ("password"=$1 AND "email" = $2)',
           [senha, email]
         );
         if (user.rowCount > 0) {
           let update = await pool.query(
-            'UPDATE "TEST" SET "password" = $1 WHERE "email" = $2',
+            'UPDATE test SET "password" = $1 WHERE "email" = $2',
             [NovaSenha, email]
           );
           if (update.rowCount) {
@@ -81,7 +81,7 @@ export default {
       res.status(400).send("email e senha são obrigatorios");
     } else {
       let userDb = await pool.query(
-        'SELECT * FROM "TEST" WHERE ("password" = $1 AND "email" = $2)',
+        'SELECT * FROM test WHERE ("password" = $1 AND "email" = $2)',
         [senha, email]
       );
       if (userDb.rowCount > 0) {

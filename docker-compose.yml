@@ -5,11 +5,13 @@ services:
       context: .
       dockerfile: dockerfile
     ports:
-      - "5001:5001"
+      - "5001:5004"
     volumes:
       - .:/app
     networks:
       - mynet
+    env_file:
+      - .env.local
 
  pgadmin:
     image: "elestio/pgadmin"
